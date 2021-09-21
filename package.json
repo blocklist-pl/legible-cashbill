@@ -1,6 +1,6 @@
 {
   "name": "@blocklist/legible-cashbill",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Unofficial Node.js wrapper for CashBill REST API",
   "main": "lib/index.js",
   "publishConfig": {
