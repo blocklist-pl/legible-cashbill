@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "declaration": true,
+    "outDir": "./lib",
+    "moduleResolution": "node",
+    "esModuleInterop": true
+  }
+}
