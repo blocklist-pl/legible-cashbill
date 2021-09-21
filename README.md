@@ -35,5 +35,5 @@ async function start() {
 }
 ```
 
-[cashbill]: "https://cashbill.pl/"
-[cashbill-docs]: "https://www.cashbill.pl/download/dokumentacje/Płatności/Płatności%20CashBill%232.4.pdf"
+[cashbill]: https://cashbill.pl/
+[cashbill-docs]: https://www.cashbill.pl/download/dokumentacje/Płatności/Płatności%20CashBill%232.4.pdf
