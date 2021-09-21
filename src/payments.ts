@@ -40,7 +40,7 @@ export class Payments extends Module {
       )
       return data as PaymentResponse
     } catch (error) {
-      throw new Error(`Could not create payment. Reason: ${error.data}`)
+      throw new Error(`Could not create payment. Reason: ${error.message}`)
     }
   }
 
