@@ -3,13 +3,15 @@ import axios from 'axios'
 import qs from 'qs'
 
 import { Module } from './module'
-import { Payment, PaymentDto, PaymentResponse } from './types'
+import { Payment, PaymentDto, PaymentResponse, PaymentReturnUrls } from './types'
 
 export class Payments extends Module {
   protected readonly moduleConfiguration = {
     createPaymentUrl: `${this.configuration.apiUrl}/payment/${this.configuration.shopId}/`,
     retrievePaymentUrl: (id: string, signature: string) =>
       `${this.configuration.apiUrl}/payment/${this.configuration.shopId}/${id}?sign=${signature}`,
+    updatePaymentReturnUrl: (id: string) =>
+      `${this.configuration.apiUrl}/payment/${this.configuration.shopId}/${id}`,
   }
 
   async create(dto: PaymentDto) {
@@ -44,6 +46,24 @@ export class Payments extends Module {
     }
   }
 
+  async updateReturnUrls(id: string, urls: PaymentReturnUrls) {
+    const payload = {
+      ...urls,
+      sign: this.getUpdatePaymentReturnUrlSignature(id, urls),
+    }
+
+    try {
+      await axios.put(
+        this.moduleConfiguration.updatePaymentReturnUrl(id),
+        qs.stringify(payload),
+      )
+    } catch (error) {
+      throw new Error(
+        `Could not update return urls for payment with id = ${id}. Reason: ${error.message}`,
+      )
+    }
+  }
+
   async retrieve(id: string) {
     const { data } = await axios.get(
       this.moduleConfiguration.retrievePaymentUrl(
@@ -52,6 +72,15 @@ export class Payments extends Module {
       ),
     )
     return data as Payment
+  }
+
+  private getUpdatePaymentReturnUrlSignature(id: string, urls: PaymentReturnUrls) {
+    return crypto
+      .createHash('sha1')
+      .update(
+        id + urls.returnUrl + (urls.negativeReturnUrl ?? '') + this.configuration.secret,
+      )
+      .digest('hex')
   }
 
   private getRetrievePaymentSignature(id: string): string {

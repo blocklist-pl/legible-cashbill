@@ -4,6 +4,8 @@ export type LegibleCashbillConfiguratin = {
   apiUrl?: string
 }
 
+export type PaymentReturnUrls = { returnUrl: string; negativeReturnUrl?: string }
+
 export type PersonalData = Partial<{
   firstName: string
   surname: string
