@@ -78,7 +78,7 @@ export class Payments extends Module {
     return crypto
       .createHash('sha1')
       .update(
-        id + urls.returnUrl + (urls.negativeReturnUrl ?? '') + this.configuration.secret,
+        id + urls.returnUrl + (urls.negativeReturnUrl || '') + this.configuration.secret,
       )
       .digest('hex')
   }
